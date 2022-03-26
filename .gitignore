@@ -137,5 +137,4 @@ dmypy.json
 **/diff
 
 # tests/
-tests/
-libnft/tests
+**/_test
