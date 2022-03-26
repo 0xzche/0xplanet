@@ -1,4 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, send_file
+import sys
+sys.path.insert(0, "../..")
+from libnft.url.request import Asset
+#from libnft.test import data_path
+
 
 app = Flask(__name__)
 
@@ -13,27 +18,17 @@ def integer(i):
     #return render_template("test.html", idx=i)
     return f"<h> {i} </h>"
 
-@app.route("/azuki/<i>")
-def show_azuki(i):
-    import sys
-    sys.path.insert(0, "../..")
-    from libnft.url.request import Asset
-    from libnft.test import data_path
+@app.route("/wallpaper/<slug>/<i>", methods=["POST", "GET"])
+def show_nft(slug, i):
     #from PIL import Image
     #from io import BytesIO
-    azuki_no = 10
-    azuki = Asset(slug="azuki", idx=azuki_no)
-    img_url = azuki.img_url
-    return f"""
-    <center>
-    <img src="{img_url}" width=100>
-    </center>
+    asset = Asset(slug=slug, idx=i)
+    img_url = asset.img_url
     """
-    #azuki.get_img(out_file=data_path() / "azuki" / f"{azuki_no}.png")
-    #im_bytes = azuki.get_img(out_file=data_path() / "azuki" / f"{azuki_no}.png")
-    #im = Image.open(BytesIO(im_bytes))
-    #im.show()
-
+    if request.method == "POST":
+        send_file(img_url)
+    """
+    return render_template("wallpaper.html", img_url=img_url)
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=8080, debug=True)

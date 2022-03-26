@@ -9,6 +9,10 @@ base_url_map = {
     "0xzuki": "https://opensea.io/assets/0x2eb6be120ef111553f768fcd509b6368e82d1661/",
 }
 
+token_uri_map = {
+    "azuki": "https://ikzttp.mypinata.cloud/ipfs/QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYS2TBLgrvw8CW/",
+    "0xzuki": "https://metadata.0xzuki.com/"
+}
 
 class Asset:
 
@@ -19,11 +23,15 @@ class Asset:
         self._token_uri_json = self.get_token_uri_json()
         log.info(f"Initialized: collection {slug} number {idx}")
 
+    @property
+    def is_supported(self):
+        return self._slug in token_uri_map
+
     def get_token_uri(self):
-        base_url = {
-            "azuki": "https://ikzttp.mypinata.cloud/ipfs/QmQFkLSQysj94s5GvTHPyzTxrawwtjgiiYS2TBLgrvw8CW/"
-        }.get(self._slug)
-        return f"{base_url}/{self._idx}"
+        if not self.is_supported:
+            raise NotImplementedError(f"{self._slug} is not supported right now. Supported collections: {list(token_uri_map.keys())}")
+        base_uri = token_uri_map.get(self._slug)
+        return f"{base_uri}/{self._idx}"
 
     def get_token_uri_json(self):
         resp = get_with_retry(self._token_uri)
