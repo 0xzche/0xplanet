@@ -78,18 +78,18 @@ def wallpaper_out(slug, idx):
     log.info(f"done processing image")
 
     log.info(f"saving image")
+    cache_dir = "/tmp"
     new_img_static_path_rel = f"wallpaper/cache/{today()}/{slug}/{idx}.png" # the relative path of the image under static
-
-    new_img_path = Path(current_app.root_path) / "static" / new_img_static_path_rel
-    rm_old(Path(current_app.root_path) / "static")
+    new_img_path = Path(cache_dir) / "static" / new_img_static_path_rel
+    #rm_old(Path(cache_dir) / "static")
 
     new_img_path.parent.mkdir(parents=True, exist_ok=True)
     new_img.save(str(new_img_path))
     log.info(f"done saving image")
 
-    new_img_url = url_for("static", filename=new_img_static_path_rel)
+    #new_img_url = url_for("static", filename=new_img_static_path_rel)
+    new_img_url = new_img_path
 
-    page_bg_color = collection_info["bg_color_rgb"]
     return render_template("wallpaper_out.html", 
                            old_img_url=old_img_url, 
                            new_img_url=new_img_url,
@@ -97,8 +97,6 @@ def wallpaper_out(slug, idx):
                            bg_color="rgb(0,0,0)",
                            )
 
-
-    
 
 
 if __name__ == '__main__':
