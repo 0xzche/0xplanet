@@ -7,12 +7,30 @@
     <!--
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     -->
+    <style>
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5%;
+            margin-bottom: 5%;
+            border: 5px solid #555;
+        }
+    </style>
 </head>
 <body style="background-color:rgb(255, 215, 0);">
 
     <div>
-        <a href="{{img_url}}" download>
-            <img src="{{img_url}}" width=200 alt="click to view original image">
+        <a href="{{old_img_url}}">
+            <img src="{{old_img_url}}" height="500x" alt="click to view original image">
+        </a>
+    </div>
+
+    <hr>
+
+    <div>
+        <a href="{{new_img_url}}">
+            <img src="{{new_img_url}}" height="500x" alt="click to view original image">
         </a>
     </div>
 
