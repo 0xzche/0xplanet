@@ -1,1 +1,3 @@
 runtime: python39
+env_variables:
+    CLOUD_STORAGE_BUCKET: 0xplanet
