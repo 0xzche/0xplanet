@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello HTML Templates</title>
+    <!--
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    -->
+    <style>
+        .container {
+            font-family: arial;
+            font-size: 24px;
+            margin: auto;
+            width: auto;
+            height: auto;
+            text-align: center;
+        }
+        body {
+            margin: 15% 10% 15% 10%;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: Georgia;
+            color: rgb(255, 255, 255);
+        }
+
+
+        h1 {
+            font-size: 30px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        input, select {
+            font-family: Georgia;
+            font-size: 20px;
+            margin: auto;
+            width: 250px;
+            height: auto;
+            text-align: center;
+            appearance: none;
+        }
+
+        input.submit {
+            width: auto;
+        }
+
+    </style>
+
+    <script>
+        $('input[name="idx"]').val('');
+    </script>
+</head>
+    <body style="background-color:rgb(0,0,0);">
+
+    <div class="container">
+        <form action="" method="post">
+
+            <h1>Wallpaper Generator</h1>
+            <a href="https://twitter.com/0xmayaka?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @0xmayaka</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <br>
+            <br>
+
+            <h2>Collection</h2>
+            <select name="slug" id="size">
+                <option selected> Azuki </option>
+                <option> 0xZuki </option>
+            </select>
+
+            <h2>Number</h2>
+            <input type="number" maxlength="4" onClick="this.select();"  
+            oninvalid="alert('Input a number between 0 and 9999!');"
+            name="idx" id="idx" min="0" max="9999">
+            
+            <h2>Srceen dimension</h2>
+            <select name="size" id="size">
+                <option selected> 13:6(iPhone X/11/12/13) </option>
+                <option> 16:9(iPhone 6/7/8) </option>
+            </select>
+            <br>
+            <br>
+            <input class="submit" type="submit" value="Submit">
+            <br>
+        </form>
+    </div>
+
+</body>
+</html>

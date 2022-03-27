@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello HTML Templates</title>
+    <!--
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    -->
+    <style>
+        .container {
+            font-family: arial;
+            font-size: 24px;
+            margin: auto;
+            width: auto;
+            height: auto;
+            text-align: center;
+        }
+        body {
+            margin: 15% 10% 15% 10%;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: Georgia;
+            color: rgb(255, 255, 255);
+        }
+
+
+        h1 {
+            font-size: 30px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        input, select {
+            font-family: Georgia;
+            font-size: 20px;
+            margin: auto;
+            width: 250px;
+            height: auto;
+            text-align: center;
+            appearance: none;
+        }
+
+        input.submit {
+            width: auto;
+        }
+
+    </style>
+
+</head>
+    <body style="background-color:rgb(0,0,0);">
+
+    <div class="container">
+        <form action="" method="post">
+            <h3> {{warning}} </h3>
+            <br>
+            <input class="submit" type="submit" value="Go back">
+    </div>
+
+</body>
+</html>
