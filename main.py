@@ -67,10 +67,10 @@ def wallpaper_img(slug, idx, ratio):
         # write txt
         log.info(f"done processing image")
         font_path = Path(current_app.root_path) / "static" / "fonts" / "AbrilFatface-Regular.ttf"
-        font = ImageFont.truetype(str(font_path), 200)
+        font = ImageFont.truetype(str(font_path), 140)
         txt = Image.new('RGBA', new_img.size, (255,255,255,0))
         drawer = ImageDraw.Draw(new_img)    
-        drawer.text((new_w // 2, (new_h - old_h) // 2), 
+        drawer.text((new_w // 2, int((new_h - old_h) * 0.9) ), 
                     collection_info["title"],
                     fill=(0, 0, 0, 255), font=font, anchor="mm")
         new_img = Image.alpha_composite(new_img, txt)
