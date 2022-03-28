@@ -12,8 +12,16 @@ from base64 import b64encode
 #CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 app = Flask(__name__)
+from flask_cors import CORS
+CORS(app)
 cache = {
 
+}
+
+name_to_slug = {
+    "Azuki": "azuki",
+    "0xZuki": "0xzuki",
+    "Feline Fiendz": "felinefiendznft"
 }
 
 
@@ -21,13 +29,18 @@ cache = {
 def wallpaper_index():
 
     if request.method == 'POST':
-        slug = request.form["slug"].lower()
+        log.info(f"{request.form}")
+        slug = name_to_slug.get(request.form["slug_name"])
         idx = request.form["idx"]
         if not idx:
             return render_template("wallpaper_index.html", warning="Please input a valid number (0~9999) !!")
         size = request.form["size"]
-        log.info(f"{request.form}")
-        return redirect(url_for(f'wallpaper_out', slug=slug, idx=idx, size=size))
+        h, w = size.split("(")[0].split(":")
+        ratio = f"{h}by{w}"
+        max_idx = wallpaper.get_info(slug)["idx_range"][-1]
+        idx = str(min(max_idx, int(idx)))
+        log.info(f"{slug}, {idx}, {ratio}")
+        return redirect(url_for(f'wallpaper_out', slug=slug, idx=idx, ratio=ratio))
     return render_template("wallpaper_index.html")
 
 
@@ -61,16 +74,23 @@ def wallpaper_img(slug, idx, ratio):
         new_h = int(new_w * ratio)
         bg_color = old_img.getpixel((10, 10))
         new_img = Image.new("RGBA", size=(new_w, new_h), color=bg_color)
+
+        n_slices = collection_info.get("n_slices")
+        if n_slices:
+            top_slice = old_img.crop((0, 0, old_w, old_h // n_slices)) 
+            for i in range(int(n_slices * 1.3)):
+                new_img.paste(top_slice, (0, i * old_h // n_slices))
         paste_anchor = (0, new_h - old_h)
         new_img.paste(old_img, paste_anchor)
 
         # write txt
         log.info(f"done processing image")
-        font_path = Path(current_app.root_path) / "static" / "fonts" / "AbrilFatface-Regular.ttf"
-        font = ImageFont.truetype(str(font_path), 140)
+        font_name = collection_info["font"]
+        font_path = Path(current_app.root_path) / "static" / "fonts" / f"{font_name}.ttf"
+        font = ImageFont.truetype(str(font_path), int(new_h * collection_info["font_size"]) )
         txt = Image.new('RGBA', new_img.size, (255,255,255,0))
         drawer = ImageDraw.Draw(new_img)    
-        drawer.text((new_w // 2, int((new_h - old_h) * 0.9) ), 
+        drawer.text((new_w // 2, int((new_h - old_h) * 0.85) ), 
                     collection_info["title"],
                     fill=(0, 0, 0, 255), font=font, anchor="mm")
         new_img = Image.alpha_composite(new_img, txt)
@@ -92,11 +112,8 @@ def wallpaper_img(slug, idx, ratio):
     )
 
 
-@app.route("/wallpaper/<slug>/<idx>")
-def wallpaper_out(slug, idx):
-    size = request.args.get("size")
-    h, w = size.split("(")[0].split(":")
-    ratio = f"{h}by{w}"
+@app.route("/wallpaper/<slug>/<idx>/<ratio>")
+def wallpaper_out(slug, idx, ratio):
     new_img_url = url_for("wallpaper_img", slug=slug, idx=idx, ratio=ratio)
     return render_template("wallpaper_out.html", 
                            new_img_url=new_img_url,
@@ -104,4 +121,4 @@ def wallpaper_out(slug, idx):
 
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=8080, debug=True)
+    app.run(host="127.0.0.1", port=8000, debug=True)
