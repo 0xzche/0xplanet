@@ -29,7 +29,7 @@ slug_info = {
         "font": "SudegnakNo2",
         "url_file": "meta/img_url//felinefiendznft.csv", # under static
         "font_size": 0.1,
-        "n_slices": 6,
+        "n_slices": 12,
     }
    
 }

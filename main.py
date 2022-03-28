@@ -12,8 +12,6 @@ from base64 import b64encode
 #CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 app = Flask(__name__)
-from flask_cors import CORS
-CORS(app)
 cache = {
 
 }
@@ -121,4 +119,4 @@ def wallpaper_out(slug, idx, ratio):
 
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=8000, debug=True)
+    app.run(host="127.0.0.1", port=8080, debug=True)
