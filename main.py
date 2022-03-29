@@ -19,7 +19,8 @@ cache = {
 name_to_slug = {
     "Azuki": "azuki",
     "0xZuki": "0xzuki",
-    "Feline Fiendz": "felinefiendznft"
+    "Feline Fiendz": "felinefiendznft",
+    "Loser Club": "loser-club-official"
 }
 
 

@@ -8,7 +8,7 @@ slug_info = {
         "title": "AZUKI",
         "bg_color_rgb": (103, 36, 34),
         "idx_range": list(range(10000)),
-        "font": "WastingerDisplayFreePersonal-MVydr",
+        "font": "OldNewspaperTypes",
         "font_size": 0.07,
     },
     
@@ -17,7 +17,7 @@ slug_info = {
         "title": "0xZUKI",
         "bg_color_rgb": (255, 215, 0),
         "idx_range": list(range(10000)),
-        "font": "WastingerDisplayFreePersonal-MVydr",
+        "font": "OldNewspaperTypes",
         "font_size": 0.07,
     },
 
@@ -30,6 +30,14 @@ slug_info = {
         "url_file": "meta/img_url//felinefiendznft.csv", # under static
         "font_size": 0.1,
         "n_slices": 12,
+    },
+    
+    "loser-club-official": {
+        "slug": "loser-club-official",
+        "title": "Loser Club",
+        "idx_range": list(range(10000)),
+        "font": "Nature Beauty Personal Use",
+        "font_size": 0.07,
     }
    
 }

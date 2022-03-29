@@ -19,6 +19,9 @@ slug_info = {
         "token_uri": "https://fiendz.io/metadata/{idx}.json",
         "img_url_file": "meta/img_url//felinefiendznft.csv", 
     },
+    "loser-club-official": {
+        "token_uri": "https://api.loserclub.io/ipfs/QmVKHeqzbTVKzp88prnXwz3MdDMyMMEDjpGzL5aARriUbD/{idx}.json"
+    },
 }
 
 class Asset:
