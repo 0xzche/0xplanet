@@ -37,7 +37,7 @@ slug_info = {
         "title": "Loser Club",
         "idx_range": list(range(10000)),
         "font": "Nature Beauty Personal Use",
-        "font_size": 0.07,
+        "font_size": 0.06,
     }
    
 }

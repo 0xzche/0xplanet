@@ -4,7 +4,7 @@ from PIL import Image, ImageFilter, ImageDraw, ImageFont
 from io import BytesIO
 import sys, os
 sys.path.insert(0, "../..")
-from libnft.url.request import Asset
+from libnft.url.asset import Asset
 from libnft.utils import *
 from apps import wallpaper
 from base64 import b64encode
