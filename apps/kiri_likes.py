@@ -8,6 +8,7 @@ MNZNxo1zuF8lRkOLopiTpmtrF1AcbqXF1Lv9v8gwowQRg
 """.split()
 
 bearer_token = "AAAAAAAAAAAAAAAAAAAAAKdFcQEAAAAAgZTy1s6rPckJ8zWc6%2BETr%2Fzq%2F88%3DvdZFOlmVn3g1LEpclFOqe4ik7ARArut6E5pA6CpMw1bCwOP5IS"
+kiri_username = "kiriko_0101"
 
 
 def kiri_likes():
@@ -43,6 +44,7 @@ def kiri_likes():
     default_min_like_count = 5
 
     count = 0
+    liked_count = 0
     for u, query in queries.items():
 
         print(f"processing query: {query}")
@@ -51,8 +53,26 @@ def kiri_likes():
         for tweet in tweepy.Paginator(
             finder.search_recent_tweets, 
             query=query,
-            tweet_fields=["text", 'public_metrics'], 
+            tweet_fields=["text", 'public_metrics', "id"], 
             max_results=10).flatten(limit=50):
+
+            count += 1
+
+            try:
+                liking_users = finder.get_liking_users(tweet.id)
+            except tweepy.errors.TooManyRequests:
+                print("Too many requests! Can't get liking users.\n")
+                print(f"total liked tweets: {liked_count}")
+                return
+
+            if liking_users.data is None:
+                liking_usernames = []
+            else:
+                liking_usernames = [u.username for u in liking_users.data]
+
+            if kiri_username in liking_usernames:
+                print(f"({count}) Kiri already liked this :( ")
+                continue
 
             like_count = tweet.public_metrics["like_count"]
             if like_count < min_like_count:
@@ -62,16 +82,16 @@ def kiri_likes():
                 print(f" a lot of likes : {like_count} ")
                 print(tweet.text)
                 print("-------------------------------\n")
-            try:
-                kiri.like(tweet.id)
-                print("Liked!!\n")
-                count += 1
-            except tweepy.errors.TooManyRequests:
-                print("Too many requests\n")
-                print(f"total liked tweets: {count}")
-                return
+                try:
+                    kiri.like(tweet.id)
+                    print("Liked!!\n")
+                    count += 1
+                except tweepy.errors.TooManyRequests:
+                    print("Too many requests! Can't like this tweet.\n")
+                    print(f"total liked tweets: {liked_count}")
+                    return
 
-    print(f"total liked tweets: {count}")
+    print(f"total liked tweets: {liked_count}")
 
 if __name__ == "__main__":
 
