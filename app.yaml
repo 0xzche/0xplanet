@@ -1,3 +1,7 @@
 runtime: python39
 env_variables:
     CLOUD_STORAGE_BUCKET: 0xplanet
+
+handlers:
+- url: /kiri/likes
+  script: apps/kiri_likes.py

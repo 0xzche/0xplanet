@@ -39,6 +39,6 @@ for tweet in tweepy.Paginator(
     client1.search_recent_tweets, 
     query=query,
     tweet_fields=['context_annotations', 'created_at'], 
-    max_results=10).flatten(limit=100):
+    max_results=10).flatten(limit=20):
     print("---------------------------")
-    print(tweet.id)
+    print(tweet.text)
