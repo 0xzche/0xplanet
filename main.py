@@ -7,6 +7,7 @@ sys.path.insert(0, "../..")
 from libnft.url.asset import Asset
 from libnft.utils import *
 from apps import wallpaper
+from apps.kiri_likes import kiri_likes
 from base64 import b64encode
 #from libnft.test import data_path
 #CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
@@ -117,6 +118,12 @@ def wallpaper_out(slug, idx, ratio):
     return render_template("wallpaper_out.html", 
                            new_img_url=new_img_url,
                            bg_color="rgb(0,0,0)")
+
+
+@app.route("/kiri/likes")
+def kiri_likes_page():
+    kiri_likes()
+    return "Kiri likes azuki"
 
 
 if __name__ == '__main__':
