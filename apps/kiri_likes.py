@@ -1,4 +1,5 @@
 import tweepy
+import numpy as np
 
 auth_strs="""
 VStGb3HMjzZhzf4ni8aslS5OM 
@@ -47,6 +48,7 @@ def kiri_likes():
         "KLiebsMfer",
         "latteshelby",
     ]
+    np.random.shuffle(tgt_users)
 
     # query for each user
     queries = {}
