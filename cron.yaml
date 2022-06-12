@@ -1,0 +1,5 @@
+
+cron:
+- description: "kiri likes azuki"
+  url: /kiri/likes
+  schedule: every 10 minutes
