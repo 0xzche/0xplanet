@@ -9,6 +9,19 @@ MNZNxo1zuF8lRkOLopiTpmtrF1AcbqXF1Lv9v8gwowQRg
 
 bearer_token = "AAAAAAAAAAAAAAAAAAAAAKdFcQEAAAAAgZTy1s6rPckJ8zWc6%2BETr%2Fzq%2F88%3DvdZFOlmVn3g1LEpclFOqe4ik7ARArut6E5pA6CpMw1bCwOP5IS"
 kiri_username = "kiriko_0101"
+kiri_id = "1513021814502535168"
+
+class Log:
+
+    content = []
+
+    def info(self, a):
+        self.content.append(a)
+    
+    def output(self):
+        print(self.content)
+
+log = Log()
 
 
 def kiri_likes():
@@ -45,9 +58,14 @@ def kiri_likes():
 
     count = 0
     liked_count = 0
+    max_like_count = 5
+
+    tweets_liked_by_kiri = finder.get_liked_tweets(kiri_id)
+    tweets_liked_by_kiri = [_.id for _ in tweets_liked_by_kiri.data]
+    
     for u, query in queries.items():
 
-        print(f"processing query: {query}")
+        log.info(f"processing query: {query}")
         min_like_count = like_count_thres.get(u, default_min_like_count)
 
         for tweet in tweepy.Paginator(
@@ -56,43 +74,36 @@ def kiri_likes():
             tweet_fields=["text", 'public_metrics', "id"], 
             max_results=10).flatten(limit=50):
 
-            count += 1
-
-            try:
-                liking_users = finder.get_liking_users(tweet.id)
-            except tweepy.errors.TooManyRequests:
-                print("Too many requests! Can't get liking users.\n")
-                print(f"total liked tweets: {liked_count}")
-                return
-
-            if liking_users.data is None:
-                liking_usernames = []
-            else:
-                liking_usernames = [u.username for u in liking_users.data]
-
-            if kiri_username in liking_usernames:
-                print(f"({count}) Kiri already liked this :( ")
+            if tweet.id in tweets_liked_by_kiri:
+                log.info(f"({count}) Kiri already liked this :( ")
                 continue
 
+            count += 1
             like_count = tweet.public_metrics["like_count"]
             if like_count < min_like_count:
-                print(f" too few likes : {like_count}; NGMI ")
+                log.info(f" too few likes : {like_count}; NGMI ")
             else:
-                print("-------------------------------\n")
-                print(f" a lot of likes : {like_count} ")
-                print(tweet.text)
-                print("-------------------------------\n")
+                # detect liked by kiri or not
+                log.info("-------------------------------\n")
+                log.info(f" a lot of likes and not liked by kiri : {like_count} ")
+                log.info(tweet.text)
+                log.info("-------------------------------\n")
                 try:
                     kiri.like(tweet.id)
-                    print("Liked!!\n")
-                    count += 1
+                    log.info("Liked!!\n")
+                    liked_count += 1
+                    if liked_count > max_like_count:
+                        log.info(f"total liked tweets: {liked_count} > {max_like_count}; taking a break")
+                        return log
                 except tweepy.errors.TooManyRequests:
-                    print("Too many requests! Can't like this tweet.\n")
-                    print(f"total liked tweets: {liked_count}")
-                    return
+                    log.info("Too many requests! Can't like this tweet.\n")
+                    log.info(f"total liked tweets: {liked_count}")
+                    return log
 
-    print(f"total liked tweets: {liked_count}")
+    log.info(f"total liked tweets: {liked_count}")
+    return log
 
 if __name__ == "__main__":
 
-    kiri_likes()
+    log = kiri_likes()
+    log.output()

@@ -122,8 +122,14 @@ def wallpaper_out(slug, idx, ratio):
 
 @app.route("/kiri/likes")
 def kiri_likes_page():
-    kiri_likes()
-    return "Kiri likes azuki"
+    log_ =  kiri_likes()
+    rendered = "".join(
+        [
+            f"<p> {_} </p>"
+            for _ in log_.content
+        ]
+    )
+    return rendered
 
 
 if __name__ == '__main__':
