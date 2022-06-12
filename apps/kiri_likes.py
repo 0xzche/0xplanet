@@ -44,6 +44,8 @@ def kiri_likes():
         "ZAGABOND", 
         "AzukiOfficial", 
         "DemnaAzuki", 
+        "KLiebsMfer",
+        "latteshelby",
     ]
 
     # query for each user
