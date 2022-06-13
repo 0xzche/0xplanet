@@ -58,7 +58,7 @@ def kiri_likes():
     # a user's tweet must be at least a number to be liked be kiri
     like_count_thres = {}
     like_count_thres["AzukiSales"] = 0
-    default_min_like_count = 5
+    default_min_like_count = 8
 
     count = 0
     liked_count = 0
