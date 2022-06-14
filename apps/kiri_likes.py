@@ -47,6 +47,11 @@ def kiri_likes():
         "DemnaAzuki", 
         "KLiebsMfer",
         "latteshelby",
+        "0x_pasta",
+        "lellelo3",
+        "ron1ndoteth",
+        "0xsexybanana",
+        "payraw",
     ]
     np.random.shuffle(tgt_users)
 
