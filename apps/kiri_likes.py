@@ -40,7 +40,7 @@ def kiri_likes():
     finder = tweepy.Client(bearer_token=bearer_token)
 
     tgt_users = [
-        "AzukiSales",
+        #"AzukiSales",
         "0xMiikka",
         "ZAGABOND", 
         "AzukiOfficial", 
@@ -52,6 +52,9 @@ def kiri_likes():
         "ron1ndoteth",
         "0xsexybanana",
         "payraw",
+        "mulan_bean",
+        "safetyth1rd",
+        "cygaar_dev",
     ]
     np.random.shuffle(tgt_users)
 
