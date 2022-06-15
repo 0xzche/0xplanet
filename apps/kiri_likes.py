@@ -40,7 +40,7 @@ def kiri_likes():
     finder = tweepy.Client(bearer_token=bearer_token)
 
     tgt_users = [
-        #"AzukiSales",
+        "AzukiSales",
         "0xMiikka",
         "ZAGABOND", 
         "AzukiOfficial", 
