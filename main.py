@@ -8,6 +8,7 @@ from libnft.url.asset import Asset
 from libnft.utils import *
 from apps import wallpaper
 from apps.kiri_likes import kiri_likes
+from apps.azuki_responder import respond_azuki
 from base64 import b64encode
 #from libnft.test import data_path
 #CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
@@ -122,7 +123,8 @@ def wallpaper_out(slug, idx, ratio):
 
 @app.route("/kiri/likes")
 def kiri_likes_page():
-    log_ =  kiri_likes()
+    #log_ =  kiri_likes()
+    log_ = respond_azuki()
     rendered = "".join(
         [
             f"<p> {_} </p>"

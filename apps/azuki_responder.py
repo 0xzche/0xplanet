@@ -1,12 +1,18 @@
 import tweepy
 import numpy as np
+from datetime import datetime, timedelta
 
 auth_strs="""
 GOKdKri37f12tLkBeBKNmaPms
 GF6QTHGIOCeRAh6MDL5IndUB9hc44bfspvuJYVgxu4xPPK1nyd
-1551096070129819649-3yGvFt9dZAzYfggDPUetyKiAfRiph1
-oJNtrV30R9xpSaudcim0hFpAjQTRMSuVlSuNPkdWwmV9a
+1551096070129819649-may2dItjJDnMRlR12agUOWRKb3IWYd
+UC56FnVTcxfbrjel0tJO8gTFzv1WGtH6KHaNfzgBmgctg
 """.split()
+
+"""
+client secret
+vlQ7YYsTlhHxzOaax7Y5R40SG8krw_O6orB_z2AlP-8gxzCfYE
+"""
 
 bearer_token = "AAAAAAAAAAAAAAAAAAAAAMy9fAEAAAAAHLX1fhBHxjsv2tTSABpon2qOUp4%3DdcsbBizZyGgXXsIYj6ipqxOUfXa6myD3XIjX1jgmxM88z26c2p"
 my_name = "AzukiResponder"
@@ -20,7 +26,7 @@ class Log:
         self.content.append(a)
     
     def output(self):
-        print(self.content)
+        [print(_) for _ in self.content]
 
 log = Log()
 
@@ -40,23 +46,36 @@ def respond_azuki():
     finder = tweepy.Client(bearer_token=bearer_token)
 
     test_user = "0xMiikka"
-    query = f"from:{test_user} -is:retweet "
+    #query = f"azuki from:{test_user} -is:retweet"
     query = f"azuki -is:retweet "
 
     # a user's tweet must be at least a number to be liked be bot
-    log.info(f"processing query: {query}")
 
-    for tweet in tweepy.Paginator(
+    lag_minutes = 3
+    start_time = datetime.utcnow() - timedelta(minutes=lag_minutes)
+    log.info(f"processing query: {query}; start time: {start_time}")
+    query_results = list(tweepy.Paginator(
         finder.search_recent_tweets, 
         query=query,
         tweet_fields=["text", 'public_metrics', "id"], 
-        max_results=10).flatten(limit=50):
-        log.info(tweet.text)
-        bot.like(tweet.id)
-        log.info("Liked!!\n")
-        liked_count += 1
+        max_results=10,
+        start_time=start_time,
+    ).flatten(limit=10))
 
-    log.info(f"total liked tweets: {liked_count}")
+    log.info(f"total n results: {len(query_results)}")
+    replied_count = 0
+    for tweet in query_results:
+
+        log.info(f"\n processing new tweet \n content of tweet: \n {tweet.text} \n ")
+        if tweet.text.lower().endswith("azuki"):
+            try:
+                bot.create_tweet(text='azuki', in_reply_to_tweet_id=tweet.id)
+                log.info("Replied!!\n")
+                replied_count += 1
+            except Exception as e:
+                log.info(f"Falied to reply! Reason: {e}")
+
+    log.info(f"total replied tweets tweets: {replied_count}")
     return log
 
 if __name__ == "__main__":
