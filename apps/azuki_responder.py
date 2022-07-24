@@ -47,7 +47,7 @@ def respond_azuki():
 
     test_user = "0xMiikka"
     #query = f"azuki from:{test_user} -is:retweet"
-    query = f"azuki -is:retweet "
+    query = f"azuki -from:{my_id} -is:retweet "
 
     # a user's tweet must be at least a number to be liked be bot
 
@@ -57,7 +57,7 @@ def respond_azuki():
     query_results = list(tweepy.Paginator(
         finder.search_recent_tweets, 
         query=query,
-        tweet_fields=["text", 'public_metrics', "id"], 
+        tweet_fields=["text", 'public_metrics', "id", "author_id"], 
         max_results=10,
         start_time=start_time,
     ).flatten(limit=10))
