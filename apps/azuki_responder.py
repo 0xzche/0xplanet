@@ -75,6 +75,14 @@ def respond_azuki():
             except Exception as e:
                 log.info(f"Falied to reply! Reason: {e}")
 
+        if tweet.text.lower().endswith("!IKZ"):
+            try:
+                bot.create_tweet(text='!IKZ', in_reply_to_tweet_id=tweet.id)
+                log.info("Replied!!\n")
+                replied_count += 1
+            except Exception as e:
+                log.info(f"Falied to reply! Reason: {e}")
+
     log.info(f"total replied tweets tweets: {replied_count}")
     return log
 
