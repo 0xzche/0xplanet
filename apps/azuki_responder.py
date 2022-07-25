@@ -67,8 +67,8 @@ def respond_azuki():
     for tweet in query_results:
 
         log.info(f"\n processing new tweet \n content of tweet: \n {tweet.text} \n ")
-        text = tweet.text.replace(" ", "").strip()
-        if text.endswith("azuki") or text[:-1].endswith("azuki"):
+        text = ''.join(filter(str.isalnum, tweet.text)).lower()
+        if text.endswith("azuki"):
             try:
                 bot.create_tweet(text='Azuki', in_reply_to_tweet_id=tweet.id)
                 log.info("Replied!!\n")
@@ -78,7 +78,7 @@ def respond_azuki():
             except Exception as e:
                 log.info(f"Falied to reply! Reason: {e}")
 
-        if tweet.text.lower().endswith("!ikz"):
+        if tweet.text.lower().strip().endswith("!ikz"):
             try:
                 bot.create_tweet(text='!IKZ', in_reply_to_tweet_id=tweet.id)
                 log.info("Replied!!\n")
