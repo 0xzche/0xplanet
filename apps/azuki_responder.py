@@ -70,7 +70,7 @@ def respond_azuki():
         text = ''.join(filter(str.isalnum, tweet.text)).lower()
         if text.endswith("azuki") or text.endswith("azukiofficial"):
             try:
-                bot.create_tweet(text='Azuki', in_reply_to_tweet_id=tweet.id)
+                bot.create_tweet(text='𝙰𝚣𝚞𝚔𝚒', in_reply_to_tweet_id=tweet.id)
                 log.info("Replied!!\n")
                 bot.like(tweet.id)
                 log.info("Liked!!\n")
@@ -80,7 +80,7 @@ def respond_azuki():
 
         if tweet.text.lower().strip().endswith("!ikz"):
             try:
-                bot.create_tweet(text='!IKZ', in_reply_to_tweet_id=tweet.id)
+                bot.create_tweet(text='!𝙸𝙺𝚉', in_reply_to_tweet_id=tweet.id)
                 log.info("Replied!!\n")
                 bot.like(tweet.id)
                 log.info("Liked!!\n")
