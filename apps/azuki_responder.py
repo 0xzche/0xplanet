@@ -67,7 +67,7 @@ def respond_azuki():
     for tweet in query_results:
 
         log.info(f"\n processing new tweet \n content of tweet: \n {tweet.text} \n ")
-        text = tweet.text.replace(" ", "")
+        text = tweet.text.replace(" ", "").strip()
         if text.endswith("azuki") or text[:-1].endswith("azuki"):
             try:
                 bot.create_tweet(text='Azuki', in_reply_to_tweet_id=tweet.id)
