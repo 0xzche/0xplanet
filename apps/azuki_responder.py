@@ -71,6 +71,8 @@ def respond_azuki():
             try:
                 bot.create_tweet(text='Azuki', in_reply_to_tweet_id=tweet.id)
                 log.info("Replied!!\n")
+                bot.like(tweet.id)
+                log.info("Liked!!\n")
                 replied_count += 1
             except Exception as e:
                 log.info(f"Falied to reply! Reason: {e}")
