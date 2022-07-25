@@ -68,7 +68,7 @@ def respond_azuki():
 
         log.info(f"\n processing new tweet \n content of tweet: \n {tweet.text} \n ")
         text = ''.join(filter(str.isalnum, tweet.text)).lower()
-        if text.endswith("azuki"):
+        if text.endswith("azuki") or text.endswith("azukiofficial"):
             try:
                 bot.create_tweet(text='Azuki', in_reply_to_tweet_id=tweet.id)
                 log.info("Replied!!\n")
