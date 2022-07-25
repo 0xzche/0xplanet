@@ -67,9 +67,9 @@ def respond_azuki():
     for tweet in query_results:
 
         log.info(f"\n processing new tweet \n content of tweet: \n {tweet.text} \n ")
-        if tweet.text.lower().endswith("azuki"):
+        if tweet.text.lower().endswith("azuki") or tweet.text.lower()[:-1].endswith("azuki"):
             try:
-                bot.create_tweet(text='azuki', in_reply_to_tweet_id=tweet.id)
+                bot.create_tweet(text='Azuki', in_reply_to_tweet_id=tweet.id)
                 log.info("Replied!!\n")
                 replied_count += 1
             except Exception as e:
